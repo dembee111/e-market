@@ -37,7 +37,7 @@ const Signin = () => {
     });
   };
 
-  const signUpForm = () => (
+  const signInForm = () => (
     <form>
       <div className="mb-3">
         <label className="text-muted">Email</label>
@@ -101,7 +101,7 @@ const Signin = () => {
         <div className="col-md-8">
           {showError()}
           {showLoading()}
-          {signUpForm()}
+          {signInForm()}
           {redirectUser()}
         </div>
       </div>

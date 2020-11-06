@@ -68,7 +68,10 @@ const Shop = () => {
   }, []);
 
   const handleFilters = (filters, filterBy) => {
+    // myFilter state ийг newFilters болгож байна
     const newFilters = { ...myFilters };
+    // newFilters ийн filters лүү price эсвэл category ийг тавиад
+    // checkbox оос орж ирсэн утгийг массивлуу хийж байна
     newFilters.filters[filterBy] = filters;
     if (filterBy == "price") {
       let priceValues = handlePrice(filters);
@@ -117,7 +120,9 @@ const Shop = () => {
           <h3>Products</h3>
           <div className="row">
             {filteredResults.map((product, i) => (
-              <Card key={i} product={product} />
+              <div key={i} className="col-4 mb-3">
+                <Card product={product} />
+              </div>
             ))}
           </div>
           <hr />

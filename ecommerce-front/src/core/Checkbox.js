@@ -5,7 +5,7 @@ const Checkbox = ({ categories, handleFilters }) => {
 
   const handleToggle = (c) => () => {
     // return the first index of -1
-    // indexOf oor checked array giin haana bgaag yg umnuh utgiig oluulj bna
+    // хэрвээ checked массив дотор id байхгүй бол -1 ийг буцаана байвал нь хэддүгээр index заана
     const currentCategoryId = checked.indexOf(c);
 
     const newCheckedCategoryId = [...checked];

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Layout from "./Layout";
 import Card from "./Card";
 import { getCategories, list } from "./apiCore";
 
@@ -16,7 +15,7 @@ const Search = () => {
 
   const loadCategories = () => {
     getCategories().then((data) => {
-      if (data.erro) {
+      if (data.error) {
         console.log(data.error);
       } else {
         setData({ ...data, categories: data });
@@ -29,16 +28,17 @@ const Search = () => {
   }, []);
 
   const searchData = () => {
+    // console.log(search, category);
     if (search) {
-      list({
-        search: search || undefined,
-        category: category,
-      }).then((response) => {
-        if (response.error) {
-        } else {
-          setData({ ...data, results: response, searched: true });
+      list({ search: search || undefined, category: category }).then(
+        (response) => {
+          if (response.error) {
+            console.log(response.error);
+          } else {
+            setData({ ...data, results: response, searched: true });
+          }
         }
-      });
+      );
     }
   };
 
@@ -49,6 +49,28 @@ const Search = () => {
 
   const handleChange = (name) => (event) => {
     setData({ ...data, [name]: event.target.value, searched: false });
+  };
+
+  const searchMessage = (searched, results) => {
+    if (searched && results.length > 0) {
+      return `Found ${results.length} products`;
+    }
+    if (searched && results.length < 1) {
+      return `No products found`;
+    }
+  };
+
+  const searchedProducts = (results = []) => {
+    return (
+      <div>
+        <h2 className="mt-4 mb-4">{searchMessage(searched, results)}</h2>
+        <div className="row">
+          {results.map((product, i) => (
+            <Card key={i} product={product} />
+          ))}
+        </div>
+      </div>
+    );
   };
 
   const searchForm = () => (
@@ -80,10 +102,8 @@ const Search = () => {
   );
   return (
     <div>
-      <div className="container my-5">
-        {searchForm()}
-        {JSON.stringify(results)}
-      </div>
+      <div className="container my-5">{searchForm()}</div>
+      <div className="container my-5">{searchedProducts(results)}</div>
     </div>
   );
 };
